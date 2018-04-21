@@ -1,33 +1,28 @@
-use super::models::account::Account;
+use serde_json;
+use reqwest::Client;
+use models::account::Account;
 
 pub struct Etherscan {
-    pub base_url: String,
-    pub account: Option<Account>,
-    pub access_token: Option<String>,
+    base_url: String,
+    account: Option<Account>,
+    access_token: String,
 }
 
 impl Etherscan {
     fn new() -> Etherscan {
         Etherscan {
-            base_url: "https://api.etherscan.io/api?",
+            base_url: "https://api.etherscan.io/api?".to_owned(),
             account: None,
-            access_token: "YourAccessToken"
+            access_token: "YourAccessToken".to_owned(),
         }
     }
     
-    fn new(account: Account) -> Etherscan {
-        Etherscan {
-            base_url: "https://api.etherscan.io/api?",
-            account: account,
-            access_token: "YourAccessToken"
-        }
+    fn account(&mut self, account: Account){
+        self.account = Some(account)
     }
 
-    fn new(account: Account, access_token: String) -> Etherscan {
-        Etherscan {
-            base_url: "https://api.etherscan.io/api?",
-            account: account,
-            access_token: access_token,
+    fn access_token(&mut self, access_token: &str){
+        self.access_token = access_token.to_owned();
     }
 
 }
